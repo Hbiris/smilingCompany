@@ -68,3 +68,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+
+# Embedded packages (use git references in manifest.json instead)
+SmilingCompany/Packages/com.github.homuler.mediapipe/
