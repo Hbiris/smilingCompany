@@ -4,28 +4,35 @@ using UnityEngine.InputSystem;
 
 public class ExpressionState : MonoBehaviour
 {
-    public bool IsSmiling { get; private set; }
-
-    public event Action<bool> OnSmileChanged;
-
-    void Start()
+    public enum ExpressionType
     {
-        SetSmiling(false);
+        Neutral,
+        Smile,
+        Sad
     }
+
+    public ExpressionType Current { get; private set; } = ExpressionType.Neutral;
+
+    public event Action<ExpressionType> OnExpressionChanged;
 
     void Update()
     {
-        // 临时：按 R 切换笑/不笑
-        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
-        {
-            SetSmiling(!IsSmiling);
-        }
+        // 临时调试按键
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            SetExpression(ExpressionType.Neutral);
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            SetExpression(ExpressionType.Smile);
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            SetExpression(ExpressionType.Sad);
     }
 
-    public void SetSmiling(bool smiling)
+    public void SetExpression(ExpressionType type)
     {
-        if (IsSmiling == smiling) return;
-        IsSmiling = smiling;
-        OnSmileChanged?.Invoke(IsSmiling);
+        if (Current == type) return;
+
+        Current = type;
+        OnExpressionChanged?.Invoke(Current);
     }
 }
