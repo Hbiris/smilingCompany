@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 500809209}
   - component: {fileID: 500809211}
   - component: {fileID: 500809210}
+  - component: {fileID: 500809212}
   m_Layer: 0
   m_Name: SoftTint
   m_TagString: Untagged
@@ -494,6 +495,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500809208}
   m_CullTransparentMesh: 1
+--- !u!225 &500809212
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500809208}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &769791960
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +554,7 @@ GameObject:
   - component: {fileID: 801440628}
   - component: {fileID: 801440630}
   - component: {fileID: 801440629}
+  - component: {fileID: 801440631}
   m_Layer: 0
   m_Name: SoftTint
   m_TagString: Untagged
@@ -605,6 +619,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801440627}
   m_CullTransparentMesh: 1
+--- !u!225 &801440631
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801440627}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,9 +760,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 965397070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6105fa23ea2b34241a6e8f0d84c36e21, type: 3}
+  m_Script: {fileID: 11500000, guid: 084bcd282bc8f43a0b558b3e64398361, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ExpressionState
+  m_EditorClassIdentifier: Assembly-CSharp::ExpressionFilterController
+  expressionState: {fileID: 1792228655}
+  neutral: {fileID: 801440631}
+  smile: {fileID: 500809212}
+  sad: {fileID: 1016079077}
+  fadeSpeed: 6
 --- !u!1 &1016079073
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +779,7 @@ GameObject:
   - component: {fileID: 1016079074}
   - component: {fileID: 1016079076}
   - component: {fileID: 1016079075}
+  - component: {fileID: 1016079077}
   m_Layer: 0
   m_Name: SoftTint
   m_TagString: Untagged
@@ -812,6 +844,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016079073}
   m_CullTransparentMesh: 1
+--- !u!225 &1016079077
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016079073}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1045665900
 GameObject:
   m_ObjectHideFlags: 0
