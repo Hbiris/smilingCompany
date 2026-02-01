@@ -41,6 +41,9 @@ public class Carryable : MonoBehaviour, IInteractable
 
     public void SetZone(DropZone zone) => CurrentZone = zone;
 
-    public void OnPickedUp() { /* 可加音效/高亮 */ }
+    public void OnPickedUp()
+    {
+        AudioManager.Instance?.PlayPickupSound();
+    }
     public void OnDropped() { /* 可加音效 */ }
 }
