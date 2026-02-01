@@ -13,10 +13,10 @@ public class CarrySystem : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
-        {
-            if (carried != null) Drop();
-        }
+        // if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
+        // {
+        //     if (carried != null) Drop();
+        // }
 
         if (carriedRb != null)
         {

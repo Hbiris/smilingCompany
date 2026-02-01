@@ -7,36 +7,54 @@ public class Interactor : MonoBehaviour
     public float interactRange = 5f;
     public LayerMask interactMask = ~0; // 默认全层
 
-    void Update()
+   void Update()
+{
+    if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
     {
-        if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
+        var carry = GetComponentInParent<CarrySystem>();
+        if (carry != null && carry.IsCarrying)
         {
-            TryInteract();
+            carry.Drop();
+            return;
         }
+
+        TryInteract();
     }
+}
+
+
+    // void TryInteract()
+    // {
+    //     if (cam == null) return;
+
+    //     Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+
+    //     if (Physics.Raycast(ray, out RaycastHit hit, interactRange, interactMask))
+    //     {
+    //         var interactable = hit.collider.GetComponentInParent<IInteractable>();
+    //         if (interactable != null)
+    //         {
+    //             interactable.Interact(this);
+    //         }
+    //     }
+    // }
 
     void TryInteract()
     {
-        if (cam == null) return;
+        Vector3 center = cam.transform.position + cam.transform.forward * 2f;
+        float radius = 1.2f;
 
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        float radius = 2f; // 越大越容易拾取
-        // if (Physics.SphereCast(ray, radius, out RaycastHit hit, interactRange, interactMask))
-        // {
-        //     var interactable = hit.collider.GetComponentInParent<IInteractable>();
-        //     if (interactable != null)
-        //     {
-        //         interactable.Interact(this);
-        //     }
-        // }
+        Collider[] hits = Physics.OverlapSphere(center, radius, interactMask);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactRange, interactMask))
+        foreach (var h in hits)
         {
-            var interactable = hit.collider.GetComponentInParent<IInteractable>();
+            var interactable = h.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {
                 interactable.Interact(this);
+                return;
             }
         }
     }
+
 }
