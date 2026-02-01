@@ -11,9 +11,15 @@ public class PatrolTwoPoints : MonoBehaviour
     public float arriveDistance = 0.2f;
     public float turnSpeed = 12f;
 
+    [Header("Y Lock (recommended)")]
+    public bool lockY = true;        // 防止越走越飞
+    public bool useInitialY = true;
+    public float fixedY = 0f;
+
     [Header("Animator (optional)")]
     public Animator animator;
-    public string attackTrigger = "Attack"; // 你之前用的Attack trigger
+    public string speedParam = "";   // 例如 "Speed" (不填就不管)
+    public string attackTrigger = "Attack";
     public bool pauseMoveWhileAttacking = true;
 
     private Transform _target;
@@ -21,24 +27,33 @@ public class PatrolTwoPoints : MonoBehaviour
 
     void Start()
     {
-        if (pointA == null || pointB == null) return;
-        _target = pointB;
+        if (useInitialY) fixedY = transform.position.y;
+
+        if (pointA != null && pointB != null)
+            _target = pointB;
     }
 
     void Update()
     {
         if (pointA == null || pointB == null) return;
-        if (pauseMoveWhileAttacking && _isAttacking) return;
+        if (pauseMoveWhileAttacking && _isAttacking)
+        {
+            SetAnimSpeed(0f);
+            return;
+        }
 
-        // move
+        Vector3 pos = transform.position;
+        if (lockY) pos.y = fixedY;
+        transform.position = pos;
+
         Vector3 to = _target.position - transform.position;
-        to.y = 0f; // 保持地面高度
+        to.y = 0f;
         float dist = to.magnitude;
 
         if (dist <= arriveDistance)
         {
-            // switch target -> turn around effect
             _target = (_target == pointA) ? pointB : pointA;
+            SetAnimSpeed(0f);
             return;
         }
 
@@ -51,9 +66,17 @@ public class PatrolTwoPoints : MonoBehaviour
             Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, look, turnSpeed * Time.deltaTime);
         }
+
+        SetAnimSpeed(1f); // 或者 SetAnimSpeed(speed); 看你Animator参数怎么定义
     }
 
-    // 你要在别的脚本里调用：patrol.TriggerAttack();
+    void SetAnimSpeed(float v)
+    {
+        if (animator == null) return;
+        if (!string.IsNullOrEmpty(speedParam))
+            animator.SetFloat(speedParam, v);
+    }
+
     public void TriggerAttack(float resumeAfterSeconds = 0f)
     {
         if (_isAttacking) return;
@@ -62,6 +85,7 @@ public class PatrolTwoPoints : MonoBehaviour
         if (animator != null && !string.IsNullOrEmpty(attackTrigger))
             animator.SetTrigger(attackTrigger);
 
+        CancelInvoke(nameof(ResumeMove));
         if (resumeAfterSeconds > 0f)
             Invoke(nameof(ResumeMove), resumeAfterSeconds);
     }
