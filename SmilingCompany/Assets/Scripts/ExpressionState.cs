@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ExpressionState : MonoBehaviour, IEmotionProvider3
+public class ExpressionState : MonoBehaviour, IEmotionProvider3, IEmotionProvider4
 {
     public enum ExpressionType
     {
@@ -93,5 +93,14 @@ public class ExpressionState : MonoBehaviour, IEmotionProvider3
         ExpressionType.Smile => Emotion3.Smile,
         ExpressionType.Sad => Emotion3.Sad,
         _ => Emotion3.Neutral
+    };
+
+    // IEmotionProvider4 implementation - bridges to monster system (with Angry support)
+    Emotion4 IEmotionProvider4.Current => Current switch
+    {
+        ExpressionType.Neutral => Emotion4.Neutral,
+        ExpressionType.Smile => Emotion4.Smile,
+        ExpressionType.Sad => Emotion4.Sad,
+        _ => Emotion4.Neutral
     };
 }

@@ -50,6 +50,14 @@ public class MonsterZoneEmotionGate : MonoBehaviour
     {
         emotionProvider = emotionProviderBehaviour as IEmotionProvider4;
 
+        // Debug: check if provider is assigned and valid
+        if (emotionProviderBehaviour == null)
+            Debug.LogWarning($"[{gameObject.name}] emotionProviderBehaviour is NOT assigned!");
+        else if (emotionProvider == null)
+            Debug.LogWarning($"[{gameObject.name}] emotionProviderBehaviour does NOT implement IEmotionProvider4!");
+        else
+            Debug.Log($"[{gameObject.name}] EmotionProvider connected: {emotionProviderBehaviour.name}");
+
         if (angerSlider != null)
         {
             angerSlider.minValue = 0f;
@@ -209,8 +217,11 @@ public class MonsterZoneEmotionGate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"[{gameObject.name}] OnTriggerEnter: {other.name}, tag: {other.tag}");
+
         if (!other.CompareTag("Player")) return;
 
+        Debug.Log($"[{gameObject.name}] Player ENTERED zone");
         playerInside = true;
         isAttacking = false;
         anger01 = 0f;
