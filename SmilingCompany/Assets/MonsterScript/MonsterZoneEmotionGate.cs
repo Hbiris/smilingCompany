@@ -64,6 +64,11 @@ public class MonsterZoneEmotionGate : MonoBehaviour
 
     void Update()
     {
+        if (gameManager != null && (gameManager.IsInvulnerable || gameManager.IsRespawning))
+        {
+            return;
+        }
+
         if (emotionProvider == null)
         {
             UpdateInfoText("NO INPUT", "--", GetRuleText());
@@ -242,4 +247,45 @@ public class MonsterZoneEmotionGate : MonoBehaviour
         if (infoText != null && showUIOnlyWhenInside)
             infoText.gameObject.SetActive(false);
     }
+
+    void OnEnable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnPlayerDied += ForceReset;
+            gameManager.OnPlayerRespawned += ForceReset;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnPlayerDied -= ForceReset;
+            gameManager.OnPlayerRespawned -= ForceReset;
+        }
+    }
+
+    void ForceReset()
+    {
+        playerInside = false;
+        isAttacking = false;
+        anger01 = 0f;
+
+        if (dieRoutine != null)
+        {
+            StopCoroutine(dieRoutine);
+            dieRoutine = null;
+        }
+
+        if (angerSlider != null)
+        {
+            angerSlider.value = 0f;
+            angerSlider.gameObject.SetActive(false);
+        }
+
+        if (infoText != null && showUIOnlyWhenInside)
+            infoText.gameObject.SetActive(false);
+    }
+
 }
