@@ -15,16 +15,16 @@ public class MonsterZoneEmotionGate : MonoBehaviour
     public RuleMode mode = RuleMode.RequireOne;
 
     [Header("Rule: Require / Block")]
-    public Emotion3 requiredEmotion = Emotion3.Smile; // RequireOne
-    public Emotion3 blockedEmotion  = Emotion3.Smile; // BlockOne
+    public Emotion4 requiredEmotion = Emotion4.Smile; // used in RequireOne
+    public Emotion4 blockedEmotion = Emotion4.Smile;  // used in BlockOne
 
     [Header("Timing")]
-    public float angerFillTime = 1.0f;
+    public float angerFillTime = 1.0f; // seconds to fill from 0->1
     public float attackDelay = 0.2f;
 
     [Header("Refs")]
     public GameManager gameManager;
-    public MonoBehaviour emotionProviderBehaviour; // must implement IEmotionProvider3
+    public MonoBehaviour emotionProviderBehaviour; // must implement IEmotionProvider4
     public Animator monsterAnimator;
     public Slider angerSlider;
 
@@ -40,7 +40,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
     [Header("Behavior")]
     public bool resetAngerWhenSafe = true;
 
-    private IEmotionProvider3 emotionProvider;
+    private IEmotionProvider4 emotionProvider;
     private bool playerInside = false;
     private bool isAttacking = false;
     private float anger01 = 0f;
@@ -48,7 +48,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
 
     void Awake()
     {
-        emotionProvider = emotionProviderBehaviour as IEmotionProvider3;
+        emotionProvider = emotionProviderBehaviour as IEmotionProvider4;
 
         if (angerSlider != null)
         {
@@ -128,7 +128,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
         }
     }
 
-    private bool IsSafe(Emotion3 current)
+    private bool IsSafe(Emotion4 current)
     {
         return mode switch
         {
@@ -193,6 +193,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
 
         gameManager?.Die($"{transform.root.name}: failed emotion check ({ruleDesc})");
 
+        // reset
         isAttacking = false;
         anger01 = 0f;
 
