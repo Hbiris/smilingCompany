@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Handles player interaction with the Gate.
 /// Press F near gate to open calibration panel.
+/// Gate disappears when calibration is complete.
 /// </summary>
 public class GateInteraction : MonoBehaviour
 {
@@ -14,8 +15,12 @@ public class GateInteraction : MonoBehaviour
     [Header("References")]
     [SerializeField] private FaceCalibrationPanel calibrationPanel;
 
+    [Header("Completion")]
+    [SerializeField] private bool destroyOnComplete = true; // If false, just disables the gate
+
     private Transform player;
     private bool isPlayerNear = false;
+    private bool isComplete = false;
 
     private void Start()
     {
@@ -36,11 +41,26 @@ public class GateInteraction : MonoBehaviour
         {
             interactionPrompt.SetActive(false);
         }
+
+        // Subscribe to calibration complete event
+        if (calibrationPanel != null)
+        {
+            calibrationPanel.OnCalibrationComplete += OnCalibrationComplete;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe to prevent memory leaks
+        if (calibrationPanel != null)
+        {
+            calibrationPanel.OnCalibrationComplete -= OnCalibrationComplete;
+        }
     }
 
     private void Update()
     {
-        if (player == null) return;
+        if (player == null || isComplete) return;
 
         // Check distance
         float distance = Vector3.Distance(transform.position, player.position);
@@ -60,6 +80,27 @@ public class GateInteraction : MonoBehaviour
             {
                 calibrationPanel.Open();
             }
+        }
+    }
+
+    private void OnCalibrationComplete()
+    {
+        isComplete = true;
+
+        // Hide interaction prompt
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+        }
+
+        // Remove the gate
+        if (destroyOnComplete)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
