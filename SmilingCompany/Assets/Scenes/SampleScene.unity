@@ -1190,8 +1190,8 @@ Transform:
   m_GameObject: {fileID: 264569288}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.140001, y: 0.86399996, z: -6.017257}
-  m_LocalScale: {x: 0.46728998, y: 1, z: 0.26385}
+  m_LocalPosition: {x: 4.98, y: 2.5, z: -0.3}
+  m_LocalScale: {x: 0.46728998, y: 1, z: 0.15506992}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 835968815}
@@ -1546,7 +1546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &308641678
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3074,6 +3074,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1885028803}
   spawnPoint: {fileID: 1980778659}
+  respawnDelay: 0
+  invulnSeconds: 0.5
 --- !u!4 &575420186
 Transform:
   m_ObjectHideFlags: 0
@@ -8371,9 +8373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6ae3113184e40948ed8fff74ad427a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterZoneEmotionGate
-  mode: 1
-  requiredEmotion: 1
-  blockedEmotion: 1
+  mode: 0
+  requiredEmotion: 0
+  blockedEmotion: 0
   angerFillTime: 2
   attackDelay: 0.2
   gameManager: {fileID: 575420185}
