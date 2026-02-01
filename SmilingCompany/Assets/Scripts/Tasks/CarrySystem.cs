@@ -5,6 +5,7 @@ public class CarrySystem : MonoBehaviour
 {
     public Transform holdPoint;
     public float dropForwardOffset = 0.6f;
+    public float dropRightOffset = 0.6f; // Adjust to shift drop position left/right
 
     public TaskManager taskManager;
 
@@ -46,7 +47,7 @@ public class CarrySystem : MonoBehaviour
         if (carried == null) return;
 
         // 放到你面前一点点，避免卡进身体
-        Vector3 dropPos = holdPoint.position + holdPoint.forward * dropForwardOffset;
+        Vector3 dropPos = holdPoint.position + holdPoint.forward * dropForwardOffset + holdPoint.right * dropRightOffset;
 
         carriedRb.isKinematic = false;
         carriedRb.useGravity = true;
