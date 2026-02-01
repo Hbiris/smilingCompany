@@ -99,7 +99,7 @@ public class FaceDetector : MonoBehaviour
         webcamTexture = new WebCamTexture(devices[0].name, webcamWidth, webcamHeight, webcamFPS);
         webcamTexture.Play();
 
-        int timeout = 100;
+        int timeout = 1000;
         while (!webcamTexture.didUpdateThisFrame && timeout > 0)
         {
             timeout--;
