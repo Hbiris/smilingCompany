@@ -114,6 +114,9 @@ public class MonsterZoneEmotionGate : MonoBehaviour
                 angerSlider.value = anger01;
             }
 
+            // Alert sound gets louder as anger increases
+            AudioManager.Instance?.SetMonsterAlertIntensity(anger01);
+
             float timeLeft = Mathf.Max(0f, angerFillTime * (1f - anger01));
             UpdateInfoText($"IN ZONE · KILL IN {timeLeft:0.00}s", current.ToString(), GetRuleText());
 
@@ -130,6 +133,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
                     angerSlider.value = 0f;
                     angerSlider.gameObject.SetActive(false);
                 }
+                AudioManager.Instance?.StopMonsterAlert();
             }
 
             UpdateInfoText("IN ZONE · SAFE", current.ToString(), GetRuleText());
@@ -243,6 +247,8 @@ public class MonsterZoneEmotionGate : MonoBehaviour
             angerSlider.value = 0f;
             angerSlider.gameObject.SetActive(false);
         }
+
+        AudioManager.Instance?.StopMonsterAlert();
 
         if (infoText != null && showUIOnlyWhenInside)
             infoText.gameObject.SetActive(false);
