@@ -1,0 +1,30 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class Carryable : MonoBehaviour, IInteractable
+{
+    public string taskId = "deliver_document";
+
+    [HideInInspector] public Rigidbody rb;
+    public DropZone CurrentZone { get; private set; }
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void Interact(Interactor interactor)
+    {
+        var carry = interactor.GetComponentInParent<CarrySystem>();
+        if (carry == null) return;
+
+        if (!carry.IsCarrying)
+            carry.Pickup(this);
+        else carry.Drop();
+    }
+
+    public void SetZone(DropZone zone) => CurrentZone = zone;
+
+    public void OnPickedUp() { /* 可加音效/高亮 */ }
+    public void OnDropped() { /* 可加音效 */ }
+}
