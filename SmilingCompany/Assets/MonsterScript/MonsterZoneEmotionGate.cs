@@ -238,6 +238,13 @@ public class MonsterZoneEmotionGate : MonoBehaviour
         isAttacking = false; // Reset so player can be attacked again
         anger01 = 0f;
 
+        // Reset slider
+        if (angerSlider != null)
+        {
+            angerSlider.value = 0f;
+            angerSlider.gameObject.SetActive(false);
+        }
+
         // Stop any pending attack coroutine
         if (dieRoutine != null)
         {
