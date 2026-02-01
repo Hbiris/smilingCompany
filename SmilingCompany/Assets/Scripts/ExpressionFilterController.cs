@@ -38,8 +38,24 @@ public class ExpressionFilterController : MonoBehaviour
     {
         isActive = true;
         currentAlpha = 0f;
+
+        // Sync with current expression immediately
+        if (expressionState != null)
+        {
+            Sprite initialSprite = expressionState.Current switch
+            {
+                ExpressionState.ExpressionType.Neutral => neutralSprite,
+                ExpressionState.ExpressionType.Smile => smileSprite,
+                ExpressionState.ExpressionType.Sad => sadSprite,
+                _ => neutralSprite
+            };
+            currentSprite = initialSprite;
+            targetSprite = initialSprite;
+        }
+
         if (expressionImage != null)
         {
+            expressionImage.sprite = currentSprite;
             expressionImage.enabled = true;
             SetAlpha(0f);
         }

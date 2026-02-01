@@ -270,6 +270,12 @@ public class FaceCalibrationPanel : MonoBehaviour
         {
             currentPhase = Phase.Complete;
 
+            // Hide expression image immediately after final test
+            if (expressionImage != null)
+            {
+                expressionImage.enabled = false;
+            }
+
             yield return new WaitForSeconds(1f);
 
             // Activate the expression filter

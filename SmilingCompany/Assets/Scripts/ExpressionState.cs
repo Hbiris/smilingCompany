@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ExpressionState : MonoBehaviour
+public class ExpressionState : MonoBehaviour, IEmotionProvider3
 {
     public enum ExpressionType
     {
@@ -85,4 +85,13 @@ public class ExpressionState : MonoBehaviour
         Current = type;
         OnExpressionChanged?.Invoke(Current);
     }
+
+    // IEmotionProvider3 implementation - bridges to monster system
+    Emotion3 IEmotionProvider3.Current => Current switch
+    {
+        ExpressionType.Neutral => Emotion3.Neutral,
+        ExpressionType.Smile => Emotion3.Smile,
+        ExpressionType.Sad => Emotion3.Sad,
+        _ => Emotion3.Neutral
+    };
 }
