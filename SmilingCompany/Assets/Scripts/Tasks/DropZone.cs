@@ -21,7 +21,7 @@ public class DropZone : MonoBehaviour
         if (c == null) return false;
 
         // 只接受指定任务物品
-        if (c.taskId != acceptsTaskId) return false;
+        if (c.deliverTaskId != acceptsTaskId) return false;
 
         // 这里可以做“吸附到桌面指定点”
         // c.transform.position = snapPoint.position;

@@ -7,6 +7,7 @@ public class GuideImageToggle : MonoBehaviour
     [Header("Guide Images")]
     [SerializeField] private GameObject rGuideImage;
     [SerializeField] private GameObject hGuideImage;
+    [SerializeField] private ToDoChecklistUI todoChecklistUI; 
 
     void Start()
     {
@@ -23,7 +24,15 @@ public class GuideImageToggle : MonoBehaviour
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             if (rGuideImage != null)
-                rGuideImage.SetActive(!rGuideImage.activeSelf);
+            {
+                bool newState = !rGuideImage.activeSelf;
+                rGuideImage.SetActive(newState);
+
+                if (newState && todoChecklistUI != null)
+                {
+                    todoChecklistUI.Refresh();
+                }
+            }
         }
 
         // H key toggles H guide

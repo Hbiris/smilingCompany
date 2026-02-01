@@ -34,6 +34,11 @@ public class CarrySystem : MonoBehaviour
         carriedRb.useGravity = false;
 
         obj.OnPickedUp();
+        // pickup task complete
+        if (taskManager != null && !string.IsNullOrEmpty(obj.pickupTaskId))
+        {
+            taskManager.MarkTaskComplete(obj.pickupTaskId);
+        }
     }
 
     public void Drop()
@@ -56,7 +61,8 @@ public class CarrySystem : MonoBehaviour
             bool accepted = carried.CurrentZone.TryAccept(carried);
             if (accepted && taskManager != null)
             {
-                taskManager.MarkTaskComplete(carried.taskId);
+                taskManager.MarkTaskComplete(carried.deliverTaskId);
+
             }
         }
 
