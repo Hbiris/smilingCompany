@@ -3,7 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Carryable : MonoBehaviour, IInteractable
 {
-    public string taskId = "deliver_document";
+    public string pickupTaskId = "pickup_document";
+    public string deliverTaskId = "deliver_document";
 
     [HideInInspector] public Rigidbody rb;
     public DropZone CurrentZone { get; private set; }
