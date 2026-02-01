@@ -13,6 +13,21 @@ public class Carryable : MonoBehaviour, IInteractable
         rb = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        // Ignore collision with player to prevent pushing
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            Collider playerCollider = player.GetComponent<Collider>();
+            Collider myCollider = GetComponent<Collider>();
+            if (playerCollider != null && myCollider != null)
+            {
+                Physics.IgnoreCollision(myCollider, playerCollider, true);
+            }
+        }
+    }
+
     public void Interact(Interactor interactor)
     {
         var carry = interactor.GetComponentInParent<CarrySystem>();

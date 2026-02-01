@@ -11,17 +11,12 @@ public class CarrySystem : MonoBehaviour
     Rigidbody carriedRb;
     Carryable carried;
 
-    void Update()
+    void LateUpdate()
     {
-        // if (Keyboard.current != null && Keyboard.current.fKey.wasPressedThisFrame)
-        // {
-        //     if (carried != null) Drop();
-        // }
-
-        if (carriedRb != null)
+        if (carried != null)
         {
-            carriedRb.MovePosition(holdPoint.position);
-            carriedRb.MoveRotation(holdPoint.rotation);
+            carried.transform.position = holdPoint.position;
+            carried.transform.rotation = holdPoint.rotation;
         }
     }
 
