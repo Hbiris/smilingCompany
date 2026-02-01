@@ -120,6 +120,10 @@ public class MonsterZoneEmotionGate : MonoBehaviour
             float timeLeft = Mathf.Max(0f, angerFillTime * (1f - anger01));
             UpdateInfoText($"IN ZONE · KILL IN {timeLeft:0.00}s", current.ToString(), GetRuleText());
 
+            // Debug: log when anger is high
+            if (anger01 > 0.9f)
+                Debug.Log($"[{gameObject.name}] anger01 = {anger01}, isAttacking = {isAttacking}");
+
             if (anger01 >= 1f)
                 TriggerAttack();
         }
@@ -187,6 +191,7 @@ public class MonsterZoneEmotionGate : MonoBehaviour
     {
         if (isAttacking) return;
         isAttacking = true;
+        Debug.Log($"[{gameObject.name}] ATTACK TRIGGERED!");
 
         if (monsterAnimator != null && !string.IsNullOrEmpty(attackTriggerName))
             monsterAnimator.SetTrigger(attackTriggerName);
@@ -203,7 +208,10 @@ public class MonsterZoneEmotionGate : MonoBehaviour
             ? $"need {requiredEmotion}"
             : $"forbid {blockedEmotion}";
 
-        gameManager?.Die($"{transform.root.name}: failed emotion check ({ruleDesc})");
+        if (gameManager == null)
+            Debug.LogError($"[{gameObject.name}] gameManager is NULL - can't kill player!");
+        else
+            gameManager.Die($"{transform.root.name}: failed emotion check ({ruleDesc})");
 
         // reset
         isAttacking = false;
@@ -225,10 +233,17 @@ public class MonsterZoneEmotionGate : MonoBehaviour
 
         if (!other.CompareTag("Player")) return;
 
-        Debug.Log($"[{gameObject.name}] Player ENTERED zone");
+        Debug.Log($"[{gameObject.name}] Player ENTERED zone, isAttacking was: {isAttacking}");
         playerInside = true;
-        isAttacking = false;
+        isAttacking = false; // Reset so player can be attacked again
         anger01 = 0f;
+
+        // Stop any pending attack coroutine
+        if (dieRoutine != null)
+        {
+            StopCoroutine(dieRoutine);
+            dieRoutine = null;
+        }
 
         if (infoText != null && showUIOnlyWhenInside)
             infoText.gameObject.SetActive(true);
