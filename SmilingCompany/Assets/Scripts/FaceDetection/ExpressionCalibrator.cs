@@ -11,7 +11,7 @@ public class ExpressionCalibrator : MonoBehaviour
     public enum Expression { Neutral, Smile, Sad }
 
     [Header("Calibration Settings")]
-    [SerializeField] private float calibrationDuration = 2f;
+    [SerializeField] private float calibrationDuration = 0.3f;
     [SerializeField] private float sampleInterval = 0.1f;
 
     public static ExpressionCalibrator Instance { get; private set; }
