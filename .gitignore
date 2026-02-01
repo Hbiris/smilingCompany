@@ -70,3 +70,6 @@ Desktop.ini
 
 # MediaPipe package (teammates install separately)
 SmilingCompany/Packages/com.github.homuler.mediapipe/
+
+# Large map files
+SmilingCompany/Assets/OFFICE2.fbx
