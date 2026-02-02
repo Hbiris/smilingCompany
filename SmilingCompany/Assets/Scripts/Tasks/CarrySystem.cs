@@ -57,13 +57,18 @@ public class CarrySystem : MonoBehaviour
         carried.OnDropped();
 
         // 判定是否在合法 DropZone 内
+        Debug.Log($"[CarrySystem] Drop - CurrentZone: {(carried.CurrentZone != null ? carried.CurrentZone.name : "NULL")}");
         if (carried.CurrentZone != null)
         {
             bool accepted = carried.CurrentZone.TryAccept(carried);
-            if (accepted && taskManager != null)
+            Debug.Log($"[CarrySystem] TryAccept returned: {accepted}");
+            if (accepted)
             {
-                taskManager.MarkTaskComplete(carried.deliverTaskId);
-
+                AudioManager.Instance?.PlayDropSuccessSound();
+                if (taskManager != null)
+                {
+                    taskManager.MarkTaskComplete(carried.deliverTaskId);
+                }
             }
         }
 

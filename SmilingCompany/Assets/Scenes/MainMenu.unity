@@ -602,6 +602,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 404b029e0e2e94033ab5cd49056ec6ec, type: 3}
   musicVolume: 0.5
   pickupSound: {fileID: 8300000, guid: 54c757744bd5647b28935d4d93fba2e4, type: 3}
+  dropSuccessSound: {fileID: 8300000, guid: 421569c928b6d49a198c642a7ad3a217, type: 3}
   monsterAlertSound: {fileID: 8300000, guid: ce2d2455b88964ef5bb888f8a9452334, type: 3}
   sfxVolume: 1
 --- !u!4 &307925970

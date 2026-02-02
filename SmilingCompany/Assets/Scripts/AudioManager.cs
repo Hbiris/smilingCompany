@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sound Effects")]
     [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private AudioClip dropSuccessSound; // Item dropped in correct zone
     [SerializeField] private AudioClip monsterAlertSound; // Looping tension sound
     [SerializeField] [Range(0f, 1f)] private float sfxVolume = 1f;
 
@@ -66,6 +67,15 @@ public class AudioManager : MonoBehaviour
         if (sfxSource != null && pickupSound != null)
         {
             sfxSource.PlayOneShot(pickupSound, sfxVolume);
+        }
+    }
+
+    // Call this when item is dropped in correct zone
+    public void PlayDropSuccessSound()
+    {
+        if (sfxSource != null && dropSuccessSound != null)
+        {
+            sfxSource.PlayOneShot(dropSuccessSound, sfxVolume);
         }
     }
 
